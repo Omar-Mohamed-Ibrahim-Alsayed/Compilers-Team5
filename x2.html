@@ -1,0 +1,121 @@
+<html>
+<head>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/vis/4.16.1/vis.css" type="text/css" />
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/vis/4.16.1/vis-network.min.js"> </script>
+<center>
+<h1></h1>
+</center>
+
+<!-- <link rel="stylesheet" href="../node_modules/vis/dist/vis.min.css" type="text/css" />
+<script type="text/javascript" src="../node_modules/vis/dist/vis.js"> </script>-->
+
+<style type="text/css">
+
+        #mynetwork {
+            width: 670px;
+            height: 810px;
+            background-color: #ffffff;
+            border: 1px solid lightgray;
+            position: relative;
+            float: left;
+        }
+
+        
+
+        
+
+        
+</style>
+
+</head>
+
+<body>
+<div id = "mynetwork"></div>
+
+
+<script type="text/javascript">
+
+    // initialize global variables.
+    var edges;
+    var nodes;
+    var network; 
+    var container;
+    var options, data;
+
+    
+    // This method is responsible for drawing the graph, returns the drawn network
+    function drawGraph() {
+        var container = document.getElementById('mynetwork');
+        
+        
+
+        // parsing and collecting nodes and edges from the python
+        nodes = new vis.DataSet([{"color": "blue", "id": "root", "label": "exp", "level": 0, "shape": "dot"}, {"color": "blue", "id": "termID0.2217923607727299", "label": "term", "level": 1, "shape": "dot"}, {"color": "blue", "id": "exp\u0027ID0.8744099129856662", "label": "exp\u0027", "level": 1, "shape": "dot"}, {"color": "blue", "id": "factorID0.9675607219886282", "label": "factor", "level": 2, "shape": "dot"}, {"color": "blue", "id": "term\u0027ID0.9441256707553388", "label": "term\u0027", "level": 2, "shape": "dot"}, {"color": "black", "id": "IDID0.31028996463475544", "label": "ID", "level": 3, "shape": "dot"}, {"color": "blue", "id": "mulop*0.34595402226749694", "label": "mulop", "level": 3, "shape": "dot"}, {"color": "blue", "id": "factor*0.37416548462919397", "label": "factor", "level": 3, "shape": "dot"}, {"color": "black", "id": "term\u0027*0.06907853848074552", "label": "term\u0027", "level": 3, "shape": "dot"}, {"color": "black", "id": "**0.8071378490772874", "label": "*", "level": 4, "shape": "dot"}, {"color": "black", "id": "IDID0.6392361499655654", "label": "ID", "level": 4, "shape": "dot"}, {"color": "blue", "id": "addop-0.4088707787879782", "label": "addop", "level": 2, "shape": "dot"}, {"color": "blue", "id": "term-0.8024747553994993", "label": "term", "level": 2, "shape": "dot"}, {"color": "blue", "id": "exp\u0027-0.22783186253391485", "label": "exp\u0027", "level": 2, "shape": "dot"}, {"color": "black", "id": "--0.25658371969827154", "label": "-", "level": 3, "shape": "dot"}, {"color": "blue", "id": "factorID0.4358154377584976", "label": "factor", "level": 3, "shape": "dot"}, {"color": "black", "id": "term\u0027ID0.6354613828673722", "label": "term\u0027", "level": 3, "shape": "dot"}, {"color": "black", "id": "IDID0.4967619320000859", "label": "ID", "level": 4, "shape": "dot"}, {"color": "blue", "id": "addop+0.6760344663121034", "label": "addop", "level": 3, "shape": "dot"}, {"color": "blue", "id": "term+0.0006433727190160443", "label": "term", "level": 3, "shape": "dot"}, {"color": "black", "id": "exp\u0027+0.5531236126033225", "label": "exp\u0027", "level": 3, "shape": "dot"}, {"color": "black", "id": "++0.9078716309055543", "label": "+", "level": 4, "shape": "dot"}, {"color": "blue", "id": "factorID0.35841315750901204", "label": "factor", "level": 4, "shape": "dot"}, {"color": "black", "id": "term\u0027ID0.5183855259694392", "label": "term\u0027", "level": 4, "shape": "dot"}, {"color": "black", "id": "IDID0.1605018219618194", "label": "ID", "level": 5, "shape": "dot"}]);
+        edges = new vis.DataSet([{"from": "root", "to": "termID0.2217923607727299"}, {"from": "root", "to": "exp\u0027ID0.8744099129856662"}, {"from": "termID0.2217923607727299", "to": "factorID0.9675607219886282"}, {"from": "termID0.2217923607727299", "to": "term\u0027ID0.9441256707553388"}, {"from": "factorID0.9675607219886282", "to": "IDID0.31028996463475544"}, {"from": "term\u0027ID0.9441256707553388", "to": "mulop*0.34595402226749694"}, {"from": "term\u0027ID0.9441256707553388", "to": "factor*0.37416548462919397"}, {"from": "term\u0027ID0.9441256707553388", "to": "term\u0027*0.06907853848074552"}, {"from": "mulop*0.34595402226749694", "to": "**0.8071378490772874"}, {"from": "factor*0.37416548462919397", "to": "IDID0.6392361499655654"}, {"from": "exp\u0027ID0.8744099129856662", "to": "addop-0.4088707787879782"}, {"from": "exp\u0027ID0.8744099129856662", "to": "term-0.8024747553994993"}, {"from": "exp\u0027ID0.8744099129856662", "to": "exp\u0027-0.22783186253391485"}, {"from": "addop-0.4088707787879782", "to": "--0.25658371969827154"}, {"from": "term-0.8024747553994993", "to": "factorID0.4358154377584976"}, {"from": "term-0.8024747553994993", "to": "term\u0027ID0.6354613828673722"}, {"from": "factorID0.4358154377584976", "to": "IDID0.4967619320000859"}, {"from": "exp\u0027-0.22783186253391485", "to": "addop+0.6760344663121034"}, {"from": "exp\u0027-0.22783186253391485", "to": "term+0.0006433727190160443"}, {"from": "exp\u0027-0.22783186253391485", "to": "exp\u0027+0.5531236126033225"}, {"from": "addop+0.6760344663121034", "to": "++0.9078716309055543"}, {"from": "term+0.0006433727190160443", "to": "factorID0.35841315750901204"}, {"from": "term+0.0006433727190160443", "to": "term\u0027ID0.5183855259694392"}, {"from": "factorID0.35841315750901204", "to": "IDID0.1605018219618194"}]);
+
+        // adding nodes and edges to the graph
+        data = {nodes: nodes, edges: edges};
+
+        var options = {
+    "configure": {
+        "enabled": false
+    },
+    "edges": {
+        "color": {
+            "inherit": true
+        },
+        "smooth": {
+            "enabled": false,
+            "type": "continuous"
+        }
+    },
+    "interaction": {
+        "dragNodes": true,
+        "hideEdgesOnDrag": false,
+        "hideNodesOnDrag": false
+    },
+    "layout": {
+        "hierarchical": {
+            "blockShifting": true,
+            "edgeMinimization": true,
+            "enabled": true,
+            "levelSeparation": 150,
+            "parentCentralization": true,
+            "sortMethod": "hubsize",
+            "treeSpacing": 200
+        },
+        "improvedLayout": true,
+        "randomSeed": 0
+    },
+    "physics": {
+        "enabled": true,
+        "stabilization": {
+            "enabled": true,
+            "fit": true,
+            "iterations": 1000,
+            "onlyDynamicEdges": false,
+            "updateInterval": 50
+        }
+    }
+};
+        
+        
+
+        
+
+        network = new vis.Network(container, data, options);
+	 
+        
+
+
+        
+
+        return network;
+
+    }
+
+    drawGraph();
+
+</script>
+</body>
+</html>
